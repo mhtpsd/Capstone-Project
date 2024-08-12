@@ -1,0 +1,34 @@
+<!-- 
+
+
+<div class="card mt-4">
+    <div class="card-header">
+        <h4>Appointments</h4>
+    </div>
+    <div class="card-body">
+        <table class="table table-boarderd">
+            <thead>
+                <th>Appointment Id</th>
+                <th>Appointment Time</th>
+                <th>Status</th>
+                <th>Doctor</th>
+                <th>Patient</th>
+               
+            </thead>
+            <tbody *ngFor="let val of appointmentList">
+                <tr >
+                    <td>{{val.id}}</td>
+                    <td>{{val.appointmentTime | date:'dd-MMM-yyyy hh:mm:a'}}</td>
+                    <td>{{val.status}}</td>
+                    <td><strong>{{val.doctor.username}}</strong><br>
+                        <small>{{val.doctor.email}}</small>
+                    </td>
+                    <td><strong>{{val.patient.username}}</strong><br>
+                        <small>{{val.patient.email}}</small>
+                    </td>
+                  
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div> -->
