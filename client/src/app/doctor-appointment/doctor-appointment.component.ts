@@ -7,15 +7,22 @@ import { HttpService } from '../../services/http.service';
   styleUrls: ['./doctor-appointment.component.scss']
 })
 export class DoctorAppointmentComponent implements OnInit {
+<<<<<<< HEAD
 
   appointmentList:any=[];
   constructor(public httpService:HttpService) {
   
    }
+=======
+  appointmentList: any[] = [];
+
+  constructor(public httpService: HttpService) { }
+>>>>>>> 653baa45948800887c541d3e3f8bb3fced9d5c2b
 
   ngOnInit(): void {
     this.getAppointments();
   }
+<<<<<<< HEAD
   getAppointments() {
     const userIdString = localStorage.getItem('userId');
 
@@ -28,3 +35,25 @@ export class DoctorAppointmentComponent implements OnInit {
     })
   }
 }
+=======
+
+  getAppointments(): void {
+    const userId = localStorage.getItem('userId');
+    if (userId) {
+      const doctorId = parseInt(userId, 10);
+      this.httpService.getAppointmentByDoctor(doctorId).subscribe(
+        (data: any[]) => {
+          this.appointmentList = data;
+          console.log(this.appointmentList);
+        },
+        (error) => {
+          console.error('Error fetching appointments', error);
+        }
+      );
+    } else {
+      console.error('No userId found in localStorage');
+    }
+  }
+}
+
+>>>>>>> 653baa45948800887c541d3e3f8bb3fced9d5c2b

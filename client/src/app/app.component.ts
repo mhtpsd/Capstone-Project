@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+<<<<<<< HEAD
   IsLoggin:any=false;
   roleName: string | null;
   constructor(private authService: AuthService, private router:Router)
@@ -28,3 +29,21 @@ export class AppComponent {
 }
 
 }
+=======
+  IsLoggin : boolean = false;
+  roleName: string | null;
+
+  constructor(private authService: AuthService, private router: Router) {
+    this.IsLoggin = this.authService.getLoginStatus();
+    this.roleName = this.authService.getRole();
+    if (!this.IsLoggin) {
+      this.router.navigateByUrl('/login');
+    }
+  }
+
+  logout(): void {
+    this.authService.logout();
+    window.location.reload();
+  }
+}
+>>>>>>> 653baa45948800887c541d3e3f8bb3fced9d5c2b

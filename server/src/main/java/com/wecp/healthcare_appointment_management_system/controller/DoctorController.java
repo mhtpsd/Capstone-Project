@@ -36,4 +36,8 @@ public class DoctorController {
         Doctor updatedDoctor = doctorService.updateAvailability(doctorId, availability);
         return ResponseEntity.status(HttpStatus.OK).body(updatedDoctor);
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 653baa45948800887c541d3e3f8bb3fced9d5c2b

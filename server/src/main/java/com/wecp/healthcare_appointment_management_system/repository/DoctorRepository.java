@@ -7,4 +7,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface DoctorRepository extends JpaRepository<Doctor,Long> {
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 653baa45948800887c541d3e3f8bb3fced9d5c2b

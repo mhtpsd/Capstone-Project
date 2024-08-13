@@ -1,0 +1,57 @@
+.form-container {
+    position: relative;
+    width: 40%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    border: 1px solid rgba(0, 0, 0, 0.201);
+}
+
+.item-Form {
+    width: 100%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.input-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    width: 80%;
+    margin-top: 10px;
+}
+
+.error {
+    color: red;
+}
+
+input {
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.151);
+}
+
+.register {
+    background: #000;
+    color: white;
+    border: 4px solid rgba(0, 0, 0, 0.226);
+    border-radius: 5px;
+    width: 100%;
+}
+
+.go-to-login {
+    color: blue;
+    
+}
+
+a {
+    text-decoration: underline;
+}

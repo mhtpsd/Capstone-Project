@@ -1,5 +1,9 @@
 #!/bin/bash
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> 653baa45948800887c541d3e3f8bb3fced9d5c2b
 # Generate key flow
 if [ ! -f ~/.ssh/id_rsa ]; then
     echo "Generating new key..."
@@ -11,18 +15,31 @@ echo "------------------"
 echo "Please add this key to your GitHub account"
 echo "See this link 'https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account' on how to do so"
 read -p "Press enter to continue once you've added the key to your GitHub profile..."
+<<<<<<< HEAD
  
  
+=======
+
+
+>>>>>>> 653baa45948800887c541d3e3f8bb3fced9d5c2b
 # Initialise git flow
 echo "Enter your github username: "
 read username
 echo "Enter your repo name: "
 read repo
+<<<<<<< HEAD
  
 # Set git credentials
 git config --global user.name username
 git config --global user.email wecp-dummy@gmail.com
  
+=======
+
+# Set git credentials
+git config --global user.name username
+git config --global user.email wecp-dummy@gmail.com
+
+>>>>>>> 653baa45948800887c541d3e3f8bb3fced9d5c2b
 # Setup workspace
 git init
 git remote add origin "git@github.com:${username}/${repo}.git"

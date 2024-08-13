@@ -24,10 +24,15 @@ const routes: Routes = [
   { path: 'doctor-availability', component: DoctorAvailabilityComponent },
   { path: 'receptionist-appointments', component: ReceptionistAppointmentsComponent },
   { path: 'receptionist-schedule-appointments', component: ReceptionistScheduleAppointmentsComponent },
+<<<<<<< HEAD
   
   
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: '**', redirectTo: '/dashboard', pathMatch: 'full' },
+=======
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '**', redirectTo: '/login', pathMatch: 'full' },
+>>>>>>> 653baa45948800887c541d3e3f8bb3fced9d5c2b
 ];
 
 @NgModule({

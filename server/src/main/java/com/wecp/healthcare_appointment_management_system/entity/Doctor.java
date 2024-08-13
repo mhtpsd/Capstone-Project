@@ -51,4 +51,8 @@ public class Doctor extends User {
       public void setAvailability(String availability) {
          this.availability = availability;
       }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 653baa45948800887c541d3e3f8bb3fced9d5c2b
