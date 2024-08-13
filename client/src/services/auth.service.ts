@@ -23,20 +23,12 @@ export class AuthService {
   {
     localStorage.setItem('role',role);
   }
-<<<<<<< HEAD
   get getRole ():string|null
-=======
-  getRole ():string|null
->>>>>>> 653baa45948800887c541d3e3f8bb3fced9d5c2b
   {
     return localStorage.getItem('role');
   }
   // Method to retrieve login status
-<<<<<<< HEAD
   get getLoginStatus(): boolean {
-=======
-  getLoginStatus(): boolean {
->>>>>>> 653baa45948800887c541d3e3f8bb3fced9d5c2b
   
       return !!localStorage.getItem('token');
    
@@ -46,11 +38,7 @@ export class AuthService {
     return this.token;
   }
  
-<<<<<<< HEAD
   logout(){
-=======
-   logout(){
->>>>>>> 653baa45948800887c541d3e3f8bb3fced9d5c2b
     localStorage.removeItem('token');
     localStorage.removeItem('role');
      this.token=null;
@@ -60,8 +48,4 @@ export class AuthService {
   
     localStorage.setItem('userId',userid);
   }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 653baa45948800887c541d3e3f8bb3fced9d5c2b

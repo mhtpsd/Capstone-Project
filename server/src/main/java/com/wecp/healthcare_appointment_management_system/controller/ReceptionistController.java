@@ -42,8 +42,4 @@ public class ReceptionistController {
         // reschedule appointment
         return new ResponseEntity<Appointment>(appointmentService.rescheduleAppointment(appointmentId,timeDto), HttpStatus.OK);
     }
-<<<<<<< HEAD
-}
-=======
-}
->>>>>>> 653baa45948800887c541d3e3f8bb3fced9d5c2b
+  }

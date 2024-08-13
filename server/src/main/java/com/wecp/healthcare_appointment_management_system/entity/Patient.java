@@ -32,8 +32,4 @@ public class Patient extends User {
         this.appointments = appointments;
     } 
 
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 653baa45948800887c541d3e3f8bb3fced9d5c2b
