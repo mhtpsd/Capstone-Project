@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../../services/http.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Observable, of } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 
 @Component({
   selector: 'app-patient-appointment',
@@ -8,25 +9,62 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./patient-appointment.component.scss']
 })
 export class PatientAppointmentComponent implements OnInit {
-  appointmentList:any=[];
-  constructor(public httpService:HttpService) {
-  
-   }
+  appointmentList$: any;
+  filteredAppointments$: any;
+  paginatedList$: any;
+  currentPage: number = 1; 
+  itemsPerPage: number = 10;
+
+  constructor(public httpService: HttpService) {}
 
   ngOnInit(): void {
     this.getAppointments();
   }
+
   getAppointments() {
     const userIdString = localStorage.getItem('userId');
-
-    // Parse userId to an integer, if it exists
     const userId = userIdString ? parseInt(userIdString, 10) : null;
-    this.appointmentList
-    this.httpService.getAppointmentByPatient(userId).subscribe((data)=>{
-      this.appointmentList=data;
-      console.log(this.appointmentList);
-    })
+
+    this.httpService.getAppointmentByPatient(userId).subscribe((data) => {
+      this.appointmentList$ = of(data);
+      this.filteredAppointments$ = of(data); // Initialize filteredAppointments$
+      this.updatePaginatedList(); // Update paginated list after fetching data
+    });
   }
 
+  searchAppointments(event: any) {
+    const searchTerm = event.target.value.trim().toLowerCase();
+    this.filteredAppointments$ = this.appointmentList$.pipe(
+      map((appointments: any[]) => {
+        if (!searchTerm) {
+           return appointments;
+        }
+         return appointments.filter(appointment =>
+          appointment.doctor.username.toLowerCase().includes(searchTerm) || appointment.id.toString().includes(searchTerm)
+        );
+      })
+    );
+    this.updatePaginatedList(); // Update paginated list after filtering
+  }
 
+  updatePaginatedList() {
+    this.filteredAppointments$.subscribe((appointments: any[]) => {
+      const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+      const endIndex = startIndex + this.itemsPerPage;
+      this.paginatedList$ = appointments.slice(startIndex, endIndex);
+    });
+  }
+
+  goToPage(page: number) {
+    this.currentPage = page;
+    this.updatePaginatedList();
+  }
+
+  get totalPages(): number {
+    let totalItems = 0;
+    this.filteredAppointments$.subscribe((appointments: any[]) => {
+      totalItems = appointments.length;
+    });
+    return Math.ceil(totalItems / this.itemsPerPage);
+  }
 }

@@ -2,6 +2,11 @@
     <div class="card-header">
         <h4>Appointments</h4>
     </div>
+
+    <div>
+        <input type="text" placeholder="Search appointments" (input)="searchAppointments($event)" />
+    </div>
+
     <div class="card-body">
         <table class="table table-boarderd">
             <thead>
@@ -12,7 +17,7 @@
                 <th>Patient</th>
                
             </thead>
-            <tbody *ngFor="let val of appointmentList">
+            <tbody *ngFor="let val of paginatedList$">
                 <tr >
                     <td>{{val.id}}</td>
                     <td>{{val.appointmentTime | date:'dd-MMM-yyyy hh:mm:a'}}</td>
@@ -27,5 +32,28 @@
                 </tr>
             </tbody>
         </table>
+
+        <ul class="pagination">
+            <li [class.disabled]="currentPage === 1" (click)="goToPage(1)">
+                <a href="javascript:void(0)">First</a>
+            </li>
+            <li [class.disabled]="currentPage === 1" (click)="goToPage(currentPage - 1)">
+                <a href="javascript:void(0)">Previous</a>
+            </li>
+
+            <!-- Dynamic Page Numbers -->
+            <li *ngFor="let page of [].constructor(totalPages); let i = index"
+                [class.active]="i + 1 === currentPage" (click)="goToPage(i + 1)">
+                <a href="javascript:void(0)">{{i + 1}}</a>
+            </li>
+
+            <li [class.disabled]="currentPage === totalPages" (click)="goToPage(currentPage + 1)">
+                <a href="javascript:void(0)">Next</a>
+            </li>
+            <li [class.disabled]="currentPage === totalPages" (click)="goToPage(totalPages)">
+                <a href="javascript:void(0)">Last</a>
+            </li>
+        </ul>
+
     </div>
 </div>

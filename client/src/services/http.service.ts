@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { environment } from '../environments/environment.development';
 import { AuthService } from './auth.service';
 
@@ -9,6 +9,7 @@ import { AuthService } from './auth.service';
 })
 export class HttpService {
   public serverName=environment.apiUrl;
+  mystring!:any;
   constructor(private http: HttpClient, private authService:AuthService) {}
  
   updateDoctorAvailability(doctorId:any,availability:any)
@@ -103,5 +104,22 @@ export class HttpService {
     headers = headers.set('Content-Type', 'application/json');
     return this.http.post(this.serverName+'/api/receptionist/register',details,{headers:headers});
   }
+
+  usernameExists(username: string): Observable<boolean> {
+    let headers = new HttpHeaders();
+    headers = headers.set('Content-Type', 'application/json');
+    return this.http.get<boolean>(this.serverName + '/api/user/exists', { headers: headers, params: { username } });
+  }
+
+  deleteAppointment(val:any):void{
+    console.log("Helloooo"+val);
+    const authToken = this.authService.getToken();  
+    let headers = new HttpHeaders();
+    headers = headers.set('Content-Type', 'application/json');
+    headers = headers.set('Authorization', `Bearer ${authToken}`);   
+    this.http.delete(this.serverName+'/api/appointment/delete?appointmentId='+val,{headers:headers});
+  }
+
+
 
 }

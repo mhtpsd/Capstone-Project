@@ -30,15 +30,9 @@ export class ReceptionistScheduleAppointmentsComponent implements OnInit {
 
   onSubmit()
   {
-   
-    debugger;
     const formattedTime = this.datePipe.transform(this.itemForm.controls['time'].value, 'yyyy-MM-dd HH:mm:ss');
-
-    // Update the form value with the formatted date
     this.itemForm.controls['time'].setValue(formattedTime);
-    debugger;
     this.httpService.ScheduleAppointmentByReceptionist( this.itemForm.value).subscribe((data)=>{
-   
       this.itemForm.reset();
       this.responseMessage="Appointment Save Successfully";
       this.isAdded=false;

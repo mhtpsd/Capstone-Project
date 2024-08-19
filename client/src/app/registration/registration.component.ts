@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, AsyncValidatorFn, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { catchError, map, Observable, of } from 'rxjs';
 import { HttpService } from '../../services/http.service';
 
 @Component({
@@ -17,9 +18,9 @@ export class RegistrationComponent implements OnInit {
   constructor(public router: Router, private bookService: HttpService, private formBuilder: FormBuilder) {
     this.itemForm = this.formBuilder.group({
       email: [this.formModel.email, [Validators.required, Validators.email]],
-      password: [this.formModel.password, [Validators.required]],
+      password: [this.formModel.password, [Validators.required,Validators.pattern('(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&])[A-Za-z0-9!@#$%^&]{6,}')]],
       role: [this.formModel.role, [Validators.required]],
-      username: [this.formModel.username, [Validators.required]],
+      username: [this.formModel.username, [Validators.required, this.nameValidator()]],
       specialty: [this.formModel.specialty],
       availability: [this.formModel.availability],
     });
@@ -28,6 +29,24 @@ export class RegistrationComponent implements OnInit {
   ngOnInit(): void {
     this.onRoleChange();
   }
+
+  nameValidator(): AsyncValidatorFn {
+    return (control: AbstractControl): Observable<ValidationErrors | null> => {
+      return this.bookService.usernameExists(control.value).pipe(
+        map(isTaken => {
+          if (isTaken) {
+            console.log("Hii I'm Trueeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+            return { negativeValue: true };
+          } else {
+            console.log("Hii I'm Falseeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+            return null;
+          }
+        }),
+        catchError(() => of(null))
+      );
+    };
+  }
+
 
   onRoleChange() {
     this.itemForm.get('role')?.valueChanges.subscribe(role => {

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../../services/http.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
+import { map, of } from 'rxjs';
 
 @Component({
   selector: 'app-receptionist-appointments',
@@ -13,8 +14,13 @@ export class ReceptionistAppointmentsComponent implements OnInit {
   itemForm: FormGroup;
   formModel:any={};
   responseMessage:any;
-  appointmentList:any=[];
   isAdded: boolean=false;
+  filteredAppointments$:any;
+  appointmentList$:any;
+  paginatedList$: any;
+  currentPage: number = 1; 
+  itemsPerPage: number = 10;
+
   constructor(public httpService:HttpService,private formBuilder: FormBuilder,private datePipe: DatePipe) {
     this.itemForm = this.formBuilder.group({
    
@@ -26,24 +32,28 @@ export class ReceptionistAppointmentsComponent implements OnInit {
   ngOnInit(): void {
     this.getAppointments();
   }
+
+
   getAppointments() {
   
-    this.appointmentList
     this.httpService.getAllAppointments().subscribe((data)=>{
-      this.appointmentList=data;
-      console.log(this.appointmentList);
+      this.appointmentList$ = of(data);
+      this.filteredAppointments$ = of(data); //
     })
   }
+  
   editAppointment(val:any)
   {  
     
     this.itemForm.controls["id"].setValue(val.id);
   
     this.isAdded=true;
+
   }
+
+  
   onSubmit()
-  {
-   
+  { 
     const formattedTime = this.datePipe.transform(this.itemForm.controls['time'].value, 'yyyy-MM-dd HH:mm:ss');
 
     // Update the form value with the formatted date
@@ -55,5 +65,41 @@ export class ReceptionistAppointmentsComponent implements OnInit {
       this.getAppointments();
     })
     
+  }
+
+  searchAppointments(event: any) {
+    const searchTerm = event.target.value.trim().toLowerCase();
+    this.filteredAppointments$ = this.appointmentList$.pipe(
+      map((appointments: any[]) => {
+        if (!searchTerm) {
+           return appointments;
+        }
+         return appointments.filter(appointment =>
+          appointment.doctor.username.toLowerCase().includes(searchTerm) || 
+          appointment.id.toString().includes(searchTerm)
+        );  
+      })
+    );
+  }
+
+  updatePaginatedList() {
+    this.filteredAppointments$.subscribe((appointments: any[]) => {
+      const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+      const endIndex = startIndex + this.itemsPerPage;
+      this.paginatedList$ = appointments.slice(startIndex, endIndex);
+    });
+  }
+
+  goToPage(page: number) {
+    this.currentPage = page;
+    this.updatePaginatedList();
+  }
+
+  get totalPages(): number {
+    let totalItems = 0;
+    this.filteredAppointments$.subscribe((appointments: any[]) => {
+      totalItems = appointments.length;
+    });
+    return Math.ceil(totalItems / this.itemsPerPage);
   }
 }

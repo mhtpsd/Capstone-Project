@@ -1,0 +1,64 @@
+.box ul.pagination {
+    position: relative; /* Changed from absolute to relative */
+    bottom: auto;
+    right: auto;
+    display: block;
+    width: 100%;
+    margin-top: 10px; /* Added some margin to space out the pagination */
+}
+
+.box .dvrecords {
+    display: block;
+    margin-bottom: 10px;
+    text-align: center; /* Center align the record and pagination controls */
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    padding-left: 0;
+    list-style: none;
+    border-radius: 0.25rem;
+    margin-top: 20px; /* Adds space above pagination */
+}
+
+.pagination li {
+    display: inline-block;
+    margin: 0 5px; /* Adds spacing between pagination items */
+}
+
+.pagination li a {
+    color: #000; /* Blue color for links */
+    text-decoration: none;
+    padding: 5px 10px;
+    border: 1px solid #dee2e6; /* Border around each page link */
+    border-radius: 0.25rem;
+    background-color: #f8f9fa; /* Light background color */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.pagination li a:hover {
+    background-color: #000;
+    color: white; /* White text on hover */
+}
+
+.pagination li.active a {
+    background-color: #000; /* Active page background */
+    color: white;
+    border-color: #000;
+}
+
+.pagination li.disabled a {
+    color: #6c757d; /* Gray color for disabled links */
+    background-color: #e9ecef;
+    border-color: #dee2e6;
+    cursor: not-allowed;
+}
+
+.pagination li.disabled a:hover {
+    background-color: #e9ecef;
+    color: #6c757d;
+    border-color: #dee2e6;
+}
+
+
